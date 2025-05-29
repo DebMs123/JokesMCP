@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
+import fetch from "node-fetch"; 
 
 const server = new McpServer({
   name: "jokesMCP",
@@ -118,9 +119,23 @@ const PowerJoke = server.tool(
   "get-power-joke",
   "Get a random Power joke",
   async () => {
-    const response = await fetch(
-      "https://prod-175.westus.logic.azure.com:443/workflows/ef240e9705ca470c9102158cc9f00f09/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QvEO0KDDeDSkmMd5Juog-f54qJ7TZubYij8TnNlJ-6s"
-    );
+    
+const payload = {
+      inp: "A random power joke",
+    };
+
+    const response = await fetch("https://prod-175.westus.logic.azure.com:443/workflows/ef240e9705ca470c9102158cc9f00f09/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QvEO0KDDeDSkmMd5Juog-f54qJ7TZubYij8TnNlJ-6s", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Power Automate call failed: ${response.statusText}`);
+    }
+
     const data = await response.json();
     return {
       content: [
