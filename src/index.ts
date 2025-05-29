@@ -115,7 +115,7 @@ const getYoMamaJoke = server.tool(
   }
 );
 
-// Get Power joke tool
+// Get the power joke tool
 const getPowerJoke = server.tool(
   "get-power-joke",
   "Get a random Power joke",
