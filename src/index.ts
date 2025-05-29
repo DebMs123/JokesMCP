@@ -118,10 +118,6 @@ const getPowerJoke = server.tool(
   "get-power-joke",
   "Get a random power joke",
   async () => {
-    
-const payload = {
-      inp: "A random power joke",
-    };
     const response = await fetch("https://prod-175.westus.logic.azure.com:443/workflows/ef240e9705ca470c9102158cc9f00f09/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QvEO0KDDeDSkmMd5Juog-f54qJ7TZubYij8TnNlJ-6s" 
    );
 
